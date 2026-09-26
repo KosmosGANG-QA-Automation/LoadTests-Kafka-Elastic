@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  target-api:
+    build: 
+      context: ./src/TargetAPI
+      dockerfile: Dockerfile
+    ports:
+      - "9092:9092"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - Serilog__MinimumLevel__Default=Information
+      - Serilog__WriteTo__Kafka__Brokers=kafka:9092
+      - Serilog__WriteTo__Kafka__Topic=logs
+    depends_on:
+      - kafka
+    networks:
+      - app-network
+
+  kafka:
+    image: apache/kafka:3.7.0
+    environment:
+      - KAFKA_CFG_PRODUCERSLISTENERNAMES=PLAINTEXT
+      - KAFKA_CFG_PRODUCERSENDERSNAME=my-producer
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=  # KRaft mode, no ZooKeeper
+      - KAFKA_CFG_KRAFT_CLUSTERID=1234567890
+      - KAFKA_CFG_KRAFT_CONTROLLER_REPLICATION_FACTOR=1
+    ports:
+      - "8080:8080"
+    volumes:
+      - kafka-data:/bitnami/kafka
+    networks:
+      - app-network
+
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    networks:
+      - app-network
+
+  kibana:
+    image: kibana:8.13.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  kafka-data:
+  es-data:

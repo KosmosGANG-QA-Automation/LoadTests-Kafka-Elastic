@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: target-api
+  labels:
+    app: target-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: target-api
+  template:
+    metadata:
+      labels:
+        app: target-api
+    spec:
+      containers:
+      - name: target-api
+        image: target-api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"
+        - name: Serilog__MinimumLevel__Default
+          value: "Information"
+        - name: Serilog__WriteTo__Kafka__Brokers
+          value: "kafka:9092"
+        - name: Serilog__WriteTo__Kafka__Topic
+          value: "logs"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: target-api-service
+spec:
+  selector:
+    app: target-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

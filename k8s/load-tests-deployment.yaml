@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-tests
+  labels:
+    app: load-tests
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: load-tests
+  template:
+    metadata:
+      labels:
+        app: load-tests
+    spec:
+      containers:
+      - name: load-tests
+        image: load-tests:latest
+        env:
+        - name: TARGET_API_URL
+          value: "http://target-api-service:8080"
+        - name: Serilog__WriteTo__Kafka__Brokers
+          value: "kafka:9092"
+        - name: Serilog__WriteTo__Kafka__Topic
+          value: "logs"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-tests-service
+spec:
+  selector:
+    app: load-tests
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
