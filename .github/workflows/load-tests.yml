@@ -1,0 +1,40 @@
+name: Run Load Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  performance-testing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Start Infrastructure (API, Kafka, Elastic, Kibana)
+      run: |
+        docker-compose up -d
+        echo "Waiting for services to be ready..."
+        sleep 15
+
+    - name: Check Container Statuses
+      run: docker ps
+
+    - name: Build Load Tests
+      run: dotnet build src/LoadTests/LoadTests.csproj --configuration Release
+
+    - name: Run NBomber Load Tests
+      run: dotnet run --project src/LoadTests/LoadTests.csproj --configuration Release
+
+    - name: Stop Infrastructure
+      if: always() # Выполнится даже если тесты упали
+      run: docker-compose down
