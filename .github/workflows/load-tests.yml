@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:
+  workflow_dispatch: 
 
 jobs:
   performance-testing:
@@ -21,10 +21,11 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Start Infrastructure (API, Kafka, Elastic, Kibana)
+      
       run: |
-        docker-compose up -d
+        docker compose up -d
         echo "Waiting for services to be ready..."
-        sleep 15
+        sleep 15 
 
     - name: Check Container Statuses
       run: docker ps
@@ -36,5 +37,6 @@ jobs:
       run: dotnet run --project src/LoadTests/LoadTests.csproj --configuration Release
 
     - name: Stop Infrastructure
-      if: always() # Выполнится даже если тесты упали
-      run: docker-compose down
+      if: always() 
+      
+      run: docker compose down
