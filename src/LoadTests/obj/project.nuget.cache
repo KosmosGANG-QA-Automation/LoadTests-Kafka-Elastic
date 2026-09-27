@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "f8+RgM9ZSaw=",
+  "dgSpecHash": "QWMuIdWFrsc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus\\deepseek-harness\\src\\LoadTests\\LoadTests.csproj",
+  "projectFilePath": "C:\\GitHub\\src\\LoadTests\\LoadTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus\\.nuget\\packages\\commandlineparser\\2.8.0\\commandlineparser.2.8.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\consoletables\\2.4.2\\consoletables.2.4.2.nupkg.sha512",

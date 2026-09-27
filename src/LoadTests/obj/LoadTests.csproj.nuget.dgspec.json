@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus\\deepseek-harness\\src\\LoadTests\\LoadTests.csproj": {}
+    "C:\\GitHub\\src\\LoadTests\\LoadTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asus\\deepseek-harness\\src\\LoadTests\\LoadTests.csproj": {
+    "C:\\GitHub\\src\\LoadTests\\LoadTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus\\deepseek-harness\\src\\LoadTests\\LoadTests.csproj",
+        "projectUniqueName": "C:\\GitHub\\src\\LoadTests\\LoadTests.csproj",
         "projectName": "LoadTests",
-        "projectPath": "C:\\Users\\Asus\\deepseek-harness\\src\\LoadTests\\LoadTests.csproj",
+        "projectPath": "C:\\GitHub\\src\\LoadTests\\LoadTests.csproj",
         "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus\\deepseek-harness\\src\\LoadTests\\obj\\",
+        "outputPath": "C:\\GitHub\\src\\LoadTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
