@@ -1,5 +1,7 @@
 # Нагрузочное тестирование с NBocker, Kafka и Elasticsearch
 
+[![Run Load Tests](https://github.com/KosmosGANG-QA-Automation/LoadTests-Kafka-Elastic/actions/workflows/load-tests.yml/badge.svg)](https://github.com/KosmosGANG-QA-Automation/LoadTests-Kafka-Elastic/actions/workflows/load-tests.yml)
+
 ## Архитектура проекта
 
 Данный проект представляет собой полноценную систему нагрузочного тестирования, которая демонстрирует комплексные навыки AQA инженера в следующих областях:
